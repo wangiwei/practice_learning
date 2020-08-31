@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}把学的写出来|轻聊{% endblock %}
+{% block nav_home_active %}activate{% endblock %}
+
+{% load static %}
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'blog/home.css' %}">
+    <script src="http://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
+{% endblock %}
+
+
+{# 显示内容#}
+{% block content %}
+    <h2 style="text-align: center; font-weight: bold; color: #90120a; margin-top: 3em;">
+        <p>蜕变，时刻发生！</p>
+        <p>永远不要轻易否认，每一次尝试改变的冲动！</p>
+{#        <p>頑張れ、君はできる、絶対にあきらめない</p> #}
+    </h2>
+
+    <!-- 图表容器 DOM -->
+    <div id="container"></div>
+    <!--    今天24小时内的热门博客-->
+    <div class="hot-date">
+         <h3>热门点击</h3>
+        <ul>
+            {% for hot_data in today_hot_data %}
+                <li>
+                    <a href="{% url 'blog_detail' hot_data.content_object.pk %}">
+                        {{ hot_data.content_object.title }}({{hot_data.read_num}})
+                    </a>
+                </li>
+
+            {% empty %}
+                <li>今天没有热门博客！</li>
+            {% endfor %}
+        </ul>
+    </div>
+     <script>
+        // 图表配置
+        var options = {
+            chart: {type: 'line'},
+            title: {text: null},
+            xAxis: {
+                categories: {{dates|safe}},
+                tickmarkPlacement: 'on',
+                title: {text:'前7日博客访问量'},
+            },
+            yAxis: {
+                title: {text: null},
+                labels:{enabled : false},
+                gridLineDashStyle : 'Dash',
+            },
+            series: [{                              // 数据列
+                name: '阅读量',                        // 数据列名
+                data: {{ read_nums }}                    // 数据
+            }],
+            plotOptions:{
+                line:{
+                    dataLabels:{
+                        enabled:true
+                    }
+                }
+            },
+            legend : { enabled : false },
+            credits : { enabled : false },
+
+        };
+        // 图表初始化函数
+        var chart = Highcharts.chart('container', options);
+     </script>
+
+{% endblock %}

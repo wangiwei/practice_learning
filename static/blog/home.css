@@ -1,0 +1,12 @@
+div#container{
+    margin: 0 auto;
+    height: 50em;
+    min-width: 20em;
+    max-height: 30em;
+}
+
+
+div.hot-date{
+    text-align: center;
+    margin-top: 2em;
+}

@@ -1,0 +1,9 @@
+certifi==2020.6.20
+Django==3.0.3
+django-ckeditor==5.9.0
+django-js-asset==1.2.2
+mysqlclient==2.0.1
+Pillow==7.2.0
+pytz==2020.1
+sqlparse==0.3.1
+wincertstore==0.2
